@@ -1,0 +1,13 @@
+[org 0x0100]
+
+mov si,0 
+mov ax,[num1+si]
+add si,2
+mov ax,[num1+si]
+add si,2
+mov ax,[num1+si]
+
+mov ax, 0x4c00 			; terminate program
+int 0x21
+
+num1: db 1, 2, 3, 4, 5, 6
