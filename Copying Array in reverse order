@@ -1,0 +1,19 @@
+[org 0x0100]
+ 
+mov di,12
+mov si,0
+mov cx,6
+
+l1: mov ax,[num1+si]
+    add si,2
+    mov [num2+di],ax
+    sub di,2
+    sub cx,1
+    jnz l1
+
+
+mov ax, 0x4c00 			; terminate program
+int 0x21
+
+num1: dw 1, 2, 3, 4, 5, 6
+num2: dw 0,0,0,0,0,0
