@@ -1,0 +1,17 @@
+[org 0x0100]
+					; point bx to first number
+mov cx, 5
+mov ax,5
+mov bx,ax					; load count of numbers in cx					; initialize sum to zero
+
+l1:		sub bx,1			; add number to ax ; [si] or [di] ???
+		add ax,bx			; advance bx to next number
+		 sub cx,1
+		jnz l1
+               	                         ; numbers to be added reduced
+						; if numbers remain add next ; jump to l1 if (zero flag == 0)
+				
+mov dx, ax 				; write back sum in memory
+
+mov ax, 0x4c00 			; terminate program
+int 0x21
