@@ -1,0 +1,12 @@
+[org 0x0100]
+
+mov ax,[num1]
+mov bx,[num2]
+sub bx,ax
+mov cx,bx
+
+mov ax,0x4c00
+int 0x21
+
+num1: dw 0x1212
+num2: dw 0x2000
