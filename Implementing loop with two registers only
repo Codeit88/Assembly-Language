@@ -1,0 +1,14 @@
+[org 0x0100]
+
+mov ax,0
+mov bx,0
+ln:  add ax,[num1+bx]
+add bx,2
+cmp bx,8
+jne ln 
+
+
+mov ax,0x4c00
+int 0x21
+
+num1:dw 2,3,1,4
