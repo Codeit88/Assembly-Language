@@ -1,0 +1,13 @@
+[org 0x0100]
+jmp start
+num:dw 2,3
+
+
+start:
+mov ax,0
+mov bx,num
+add bx,2
+mov cx,[bx]
+
+mov ax,0x4c00
+int 0x21
