@@ -1,0 +1,35 @@
+[org 0x0100]
+
+jmp start
+
+num: dw -2,-3,-6,-5,-1
+
+start:
+mov cx,4
+mov dx,[num]
+mov ax,[num]
+mov bx,0
+
+lp:
+add bx,2
+cmp dx,[num+bx]
+jle large 
+
+cmp ax,[num+bx]
+jg small
+jmp end
+
+small:
+mov ax,[num+bx]
+jmp end
+
+large:
+mov dx,[num+bx]
+jmp end
+
+end:
+sub cx,1
+jnz lp
+
+mov ax,0x4c00
+int 0x21
