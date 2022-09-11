@@ -1,0 +1,32 @@
+[org 0x0100]
+
+jmp outerloop
+
+num1: dw 1,9,7,6
+swap: db 0
+
+outerloop:
+mov bx,0
+mov byte [swap],0
+
+innerloop:
+mov ax,[num1+bx]
+cmp ax,[num1+bx+2]
+
+jbe noswap
+
+mov dx,[num1+bx+2]
+mov [num1+bx+2],ax
+mov [num1+bx],dx
+mov byte [swap],1
+
+noswap:
+add bx,2
+cmp bx,6
+jne innerloop
+
+cmp byte[swap],1
+je outerloop
+
+mov ax,0x4c00
+int 0x21
