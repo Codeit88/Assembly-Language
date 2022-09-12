@@ -1,0 +1,41 @@
+[org 0x0100]
+
+jmp start
+
+set1:dw 1,4,6,0
+set2:dw 1,3,5,8,0
+set3:dw 0,0,0,0,0,0,0
+
+start:
+mov cx,4
+mov bx,0
+mov bp,0
+
+lp:
+mov si,[set1+bx]
+mov di,[set2+bx]
+cmp si,di
+jz onepass
+jmp place
+
+onepass:
+mov [set3+bp],di
+add bp,2
+add bx,2
+sub cx,1
+jz end
+jmp lp
+
+place:
+mov [set3+bp],di
+add bp,2
+add bx,2
+mov [set3+bp],si
+add bp,2
+sub cx,1
+jz end
+jmp lp
+
+end:
+mov ax,0x4c00
+int 0x21
