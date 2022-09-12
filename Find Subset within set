@@ -1,0 +1,48 @@
+[org 0x0100]
+
+jmp outer
+
+set:dw 1,2,4,1,2,3,3,1,2,5
+subset:dw 1,2,3
+
+outer:
+mov bx,0
+mov di,0
+mov bp,1
+
+inner:
+mov si,[subset+bx]
+cmp si,[set+di]
+jz comp2
+add di,2
+add bp,1
+cmp di,20
+jnz inner
+mov di,0
+add bx,2
+cmp bx,6
+jz endf
+jmp inner
+
+comp2:
+mov si,[subset+bx+2]
+cmp si,[set+di+2]
+jz comp3
+add di,2
+add bp,1
+jmp inner
+
+comp3:
+mov si,[subset+bx+4]
+cmp si,[set+di+4]
+jz flag
+add di,2
+add bp,1
+jmp inner
+
+flag:
+jmp endf
+
+endf:
+mov ax,0x4c00
+int 0x21
