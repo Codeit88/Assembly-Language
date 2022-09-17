@@ -1,0 +1,37 @@
+[org 0x0100]
+
+jmp outer
+
+ar:dw 2,2,2,3,4,4,5,5,5,6
+br:dw 0,0,0,0,0
+
+outer:
+mov bx,0
+mov bp,0
+
+inner:
+mov di,bx
+add di,2
+mov si,[ar+bx]
+cmp si,[ar+di]
+jnz place
+add bx,2
+cmp bx,14
+jz end
+jmp inner
+
+place:
+mov dx,[ar+bx]
+mov [br+bp],dx
+add bp,2
+mov dx,[ar+di]
+mov [br+bp],dx
+add bx,2
+cmp bx,14
+jz end
+jmp inner
+
+
+end:
+mov ax,0x4c00
+int 0x21
