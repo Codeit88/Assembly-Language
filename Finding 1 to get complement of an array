@@ -1,0 +1,36 @@
+[org 0x0100]
+
+jmp start
+
+num1:dw 0xA4FC
+num2:dw 0xB96C
+
+start:
+mov cx,16
+mov bx,[num1]
+mov dx,[num2]
+mov ax,0
+
+outer:
+ROL bx,1
+jnc stop
+add ax,1 
+
+stop:
+dec cx
+jnz outer
+
+mov cx,ax
+
+
+mov bx,0
+l2:
+STC 
+RCL bx,1
+dec cx
+jnz l2 
+
+XOR dx,bx
+
+mov ax,0x4c00
+int 0x21
