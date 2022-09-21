@@ -1,0 +1,29 @@
+[org 0x0100]
+
+jmp start
+
+num1:dw 0xC4
+num2:db 0xD2
+res:dw 0
+
+start:
+
+mov cl,8
+mov dl,[num2]
+l1:
+shr dl,1
+jnc fum
+mov al,[num1]
+add byte [res],al
+mov al,[num1+1]
+adc byte [res],al
+
+fum:
+shl byte[num1],1
+rcl byte[num1+1],1
+
+dec cl
+jnz l1
+
+mov ax,0x4c00
+int 0x21
