@@ -1,0 +1,9 @@
+[org 0x0100]
+jmp start
+num1:dw 0x4288
+start:
+shl byte[num1],1
+rcl byte[num1+1],1
+
+mov ax,0x4c00
+int 0x2
