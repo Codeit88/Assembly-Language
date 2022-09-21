@@ -1,0 +1,14 @@
+[org 0x0100]
+jmp start
+num1:dw 0x4232
+num2:dw 0x6434
+
+start:
+mov bl,[num1]
+add byte[num2],bl
+mov bl,[num1+1]
+adc byte[num2+1],bl
+
+
+mov ax,0x4c00
+int 0x21
