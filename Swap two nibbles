@@ -1,0 +1,25 @@
+[org 0x0100]
+
+jmp start
+
+num1:dw 0xB25D
+num2:db 0,0,0,0
+
+start:
+mov ax ,[num1]
+mov bl,ah
+mov cx,4
+
+rotl:
+ROL al,1
+dec cx
+jnz rotl
+
+mov cx,4
+roth:
+ROL ah,1
+dec cx
+jnz roth
+
+mov ax,0x4c00
+int 0x21
