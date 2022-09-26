@@ -1,0 +1,30 @@
+[org 0x0100]
+
+jmp start
+
+num1:dw 13
+num2:dw 14
+result:db 0
+
+start:
+mov cx,8
+mov bx,[num1]
+mov dx,[num2]
+
+outerloop:
+shr dx,1
+jnc sumup
+mov al,[num1]
+add byte [result],al
+mov al,[num1+1]
+add byte [result+1],al
+
+sumup:
+shl byte [num1],1
+rcl byte [num1+1],1
+
+dec cx
+jnz outerloop
+
+mov ax,0x4c00
+int 0x21
