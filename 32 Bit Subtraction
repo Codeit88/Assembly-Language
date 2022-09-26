@@ -1,0 +1,22 @@
+[org 0x0100]
+
+jmp start
+
+num1:dd 0x92AB2143
+num2:dd 0x43256786
+result:dd 0
+
+start:
+mov ax,[num1]
+mov bx,[num2]
+mov word [result],ax
+sub word [result],bx
+mov ax,[num1+2]
+mov bx,[num2+2]
+mov word [result+2],ax
+sbb word [result+2],bx
+
+
+
+mov ax,0x4c00
+int 0x21
