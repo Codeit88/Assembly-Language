@@ -1,0 +1,99 @@
+[org 0x0100]
+
+jmp start 
+
+
+clrscr:
+ call Delay  
+    push es
+    push ax
+    push di
+    push cx
+
+   mov ax,0xb800
+  mov es,ax
+  mov di,0
+
+  nextloc:
+  mov word[es:di],0x0720
+  add di,2
+  cmp di,4000 
+  jne nextloc
+   
+    pop cx
+    pop di
+    pop ax
+    pop es
+    ret
+
+star:
+
+    mov ax, 0xb800
+    mov es, ax
+    mov di, 0
+    mov ax, 0x072A
+    mov word[es:di], ax
+    
+mov cx, 79
+   
+Right:
+    call Delay
+    mov word[es:di], 0x0720
+    add di, 2
+    mov word[es:di], ax
+    dec cx
+    jnz Right
+
+mov cx, 24
+
+Down:
+call Delay
+    mov word[es:di], 0x0720
+    add di, 160;                    AS 80+80=160 for movement in right border of screen
+    mov word[es:di], ax
+    dec cx
+    jnz Down
+
+mov cx,79
+
+Left:
+call Delay
+    mov word[es:di], 0x0720
+    sub di, 2   ;for left printing of space
+    mov word[es:di], ax
+    dec cx
+    jnz Left
+
+mov cx, 24
+
+Upward:
+call Delay
+    mov word[es:di], 0x0720
+    sub di, 160; for negative printing on right up side
+    mov word[es:di], ax
+    dec cx
+    jnz Upward
+
+    ret
+
+Delay:
+    push bx   
+    mov bx, 0xffff;loop taking time to recover
+    time:
+        dec bx
+        jnz time
+
+    pop bx
+    ret
+   
+
+start:
+call clrscr
+call star
+
+jmp l1
+
+
+l1:
+call start
+jmp l1
