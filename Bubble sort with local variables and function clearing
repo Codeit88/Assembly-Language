@@ -1,0 +1,88 @@
+[org 0x0100]
+
+jmp start
+
+num2:dw 3,5,1,7,6,4
+num1:dw 2,4,1,3,6,7
+swap:db 0
+
+iswap:
+push ax             ;these are temp variables for proper functioning
+push cx
+
+mov ax,[bx+si]
+xchg ax,[bx+si+2]
+mov [bx+si],ax
+dec cx
+
+pop cx
+pop ax
+ret
+
+sort:
+push bp                ; this will use to access stack values
+mov bp,sp              ;this bp will intialize as a sp
+
+push ax                ;storing all values of registers before calling main function
+push bx
+push cx
+push si
+
+mov bx,[bp+6]          ;just for simplifying the case no such need 
+mov cx,[bp+4]
+
+dec cx
+shl cx,1
+
+outer:
+mov si,0
+mov byte[swap],0
+
+
+inner:
+mov ax,[bx+si]
+cmp ax,[bx+si+2]
+jbe noswap
+
+call iswap
+mov byte[swap],1
+
+noswap:
+add si,2
+cmp si,cx
+jne inner
+
+cmp byte[swap],1
+je outer
+
+pop si
+pop cx
+pop bx
+pop ax
+pop bp
+
+ret
+
+start:
+mov bx,num1
+mov cx,6
+
+push bx                          ;this will store first parameter
+push cx                          ;this will store second parameter
+call sort
+
+pop cx
+pop bx
+
+mov bx,num2
+mov cx,6
+
+push bx
+push cx
+call sort
+
+pop cx
+pop bx
+
+mov ax,0x4c00
+int 0x21
