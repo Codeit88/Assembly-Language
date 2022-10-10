@@ -1,0 +1,28 @@
+[org 0x0100]
+ 
+jmp start
+
+mess:db 'Hello World'
+size: dw 11
+
+strin:
+mov ax,0xb800
+mov es,ax
+mov di,0
+mov si,0
+
+l1:
+mov al,[mess+si]
+add si,1
+mov [es:di],al
+add di,2
+dec word[size]
+jnz l1
+jmp end
+
+start:
+jmp strin
+
+end:
+mov ax,0x4c00
+int 0x21
