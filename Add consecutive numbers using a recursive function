@@ -1,0 +1,52 @@
+[org 0x0100]
+
+jmp start
+
+fibsum:
+push bp
+mov bp,sp
+result:dw 0
+
+push word[result]
+push bx
+push cx
+push dx
+
+mov bx,[bp+4]
+mov cl,bl
+
+ln:
+dec ax
+add bx,ax
+dec cx
+cmp cx,0
+jnz ln
+mov word[result],bx
+
+pop word[result]
+pop dx
+pop cx
+pop bx
+pop bp
+
+ret 2
+
+start:
+mov ax,4
+push ax
+call fibsum
+pop ax
+
+mov ax,3
+push ax
+call fibsum
+pop ax
+
+
+mov ax,7
+push ax
+call fibsum
+pop ax
+
+mov ax,0x4c00
+int 0x21
