@@ -1,0 +1,12 @@
+[org 0x0100]
+
+mov ax,2
+mov bx,ax
+l1:
+mul bx
+dec word[num1]
+jne l1
+
+mov ax,0x4c00
+int 0x21
+num1:dw 4     ;1 less that actual power
