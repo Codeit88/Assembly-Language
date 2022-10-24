@@ -1,0 +1,49 @@
+[org 0x0100]
+
+jmp start
+
+message: db 'Hello World'
+length: dw 11
+
+printstr:
+push bp
+mov bp,sp
+push ax
+push cx
+push si
+push di
+
+mov ax,0xb800
+mov es,ax
+
+mov si,[bp+6]
+mov cx,[bp+4]
+mov di,0
+mov ah,0x07
+
+lp:
+mov al,[si]
+mov word[es:di],ax
+add si,1
+add di,2
+dec cx
+jnz lp
+
+pop di
+pop si
+pop cx
+pop ax
+pop bp
+ret
+
+start:
+push ax
+mov ax,message
+push ax
+mov ax,[length]
+push ax
+
+call printstr
+
+mov ax,0x4c00
+int 0x21
